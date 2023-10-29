@@ -11,10 +11,18 @@ const Family = () => {
     <>
       {error && <strong>Error: {JSON.stringify(error)}</strong>}
       {loading && <span>Collection: Loading...</span>}
-      {family && <span>{JSON.stringify(family.docs.map(doc => ({
-        Id: doc.id,
-        ...doc.data()
-      })), null, 2)}</span>}
+      {family && (
+        <span>
+          {JSON.stringify(
+            family.docs.map((doc) => ({
+              Id: doc.id,
+              ...doc.data(),
+            })),
+            null,
+            2
+          )}
+        </span>
+      )}
     </>
   );
 };
