@@ -12,14 +12,22 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import SavingsIcon from "@mui/icons-material/Savings";
 import UserAvatar from "./UserAvatar";
-import { Link } from "react-router-dom";
+import Link from "@mui/material/Link";
 
 const pages = ["Products", "Pricing", "Blog"];
-const settings = [{ label: "Register/Login", goto: "register" }];
+const nonUserSettings = [
+  { label: "Sign Up", goto: "register" },
+  { label: "Sign In", goto: "login" },
+];
+const userSettings = [
+  { label: "Logout", goto: "logout" },
+];
 
 function Header({ user }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+  const settings = user ? userSettings : nonUserSettings;
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -152,12 +160,11 @@ function Header({ user }) {
                 <MenuItem key={setting.label}>
                   <Typography>
                     <Link
-                      to={setting.goto}
+                      href={setting.goto}
                       style={{
                         fontWeight: "bold",
                         textAlign: "center",
                         textDecoration: "none",
-                        
                       }}
                     >
                       {setting.label}

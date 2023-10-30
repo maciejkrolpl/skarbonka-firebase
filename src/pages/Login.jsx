@@ -16,23 +16,17 @@ import {
   registerWithEmailAndPassword,
   signInWithGoogle,
 } from "../firebase/firebase";
-const Register = () => {
+const Login = () => {
   const [userData, setUserData] = useState({
-    firstName: "",
-    lastName: "",
     email: "",
     password: "",
-    confirmPassword: "",
   });
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { firstName, lastName, email, password, confirmPassword } = userData;
+    const { email, password } = userData;
     if (
-      firstName &&
-      lastName &&
       email &&
-      password &&
-      password === confirmPassword
+      password
     ) {
       registerWithEmailAndPassword(firstName, lastName, email, password);
     }
@@ -143,14 +137,6 @@ const Register = () => {
             >
               Sign Up
             </Button>
-            <Button
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              onClick={signInWithGoogle}
-            >
-              Sign Up Using Google
-            </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link href="#" variant="body2">
@@ -164,4 +150,4 @@ const Register = () => {
     </>
   );
 };
-export default Register;
+export default Login;
