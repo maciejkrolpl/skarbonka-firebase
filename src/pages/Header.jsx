@@ -7,16 +7,17 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import SavingsIcon from "@mui/icons-material/Savings";
+import UserAvatar from "./UserAvatar";
+import { Link } from "react-router-dom";
 
 const pages = ["Products", "Pricing", "Blog"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = [{ label: "Register/Login", goto: "register" }];
 
-function Header() {
+function Header({ user }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -128,7 +129,7 @@ function Header() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <UserAvatar user={user} />
               </IconButton>
             </Tooltip>
             <Menu
@@ -148,8 +149,20 @@ function Header() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                <MenuItem key={setting.label}>
+                  <Typography>
+                    <Link
+                      to={setting.goto}
+                      style={{
+                        fontWeight: "bold",
+                        textAlign: "center",
+                        textDecoration: "none",
+                        
+                      }}
+                    >
+                      {setting.label}
+                    </Link>
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -160,20 +173,3 @@ function Header() {
   );
 }
 export default Header;
-
-/*
-if (user) {
-    return (
-      <div>
-        <p>Current User: {user.user.email}</p>
-        <button
-          onClick={() => {}}
-          className="btn btn-primary btn-lg mx-3 px-5 py-3 mt-2"
-        >
-          Log out
-        </button>
-      </div>
-    );
-  }
-  return <button onClick={()=>{}} >Log in in</button>;
-*/
