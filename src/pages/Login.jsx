@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useContext } from "react";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import {
   Avatar,
@@ -12,31 +12,42 @@ import {
 } from "@mui/material";
 import Header from "./Header";
 import {
-  auth,
-  registerWithEmailAndPassword,
   signInWithGoogle,
+  logInWithEmailAndPassword,
 } from "../firebase/firebase";
+import { Context } from "./Context";
+
 const Login = () => {
+  const [context, setContext] = useContext(Context);
+
   const [userData, setUserData] = useState({
     email: "",
     password: "",
   });
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const { email, password } = userData;
-    if (
-      email &&
-      password
-    ) {
-      registerWithEmailAndPassword(firstName, lastName, email, password);
+    if (email && password) {
+      logInWithEmailAndPassword(email, password);
     }
   };
+
   const handleUserInputChange = (e) => {
     setUserData({
       ...userData,
       [e.currentTarget.name]: e.currentTarget.value,
     });
   };
+
+  const loginWithGoogle = async () => {
+    const user = await signInWithGoogle();
+    setContext(currentContext => ({
+      ...currentContext,
+      user
+    }))
+  }
+
   return (
     <>
       <Header />
@@ -60,7 +71,7 @@ const Login = () => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            Sign in
           </Typography>
           <Box
             component="form"
@@ -69,30 +80,6 @@ const Login = () => {
             sx={{ mt: 3 }}
           >
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="given-name"
-                  name="firstName"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  autoFocus
-                  onChange={handleUserInputChange}
-                  error={false}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
-                  onChange={handleUserInputChange}
-                />
-              </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
@@ -116,18 +103,6 @@ const Login = () => {
                   onChange={handleUserInputChange}
                 />
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="confirmPassword"
-                  label="Confirm Password"
-                  type="password"
-                  id="confirmPassword"
-                  autoComplete="new-password"
-                  onChange={handleUserInputChange}
-                />
-              </Grid>
             </Grid>
             <Button
               type="submit"
@@ -136,6 +111,14 @@ const Login = () => {
               sx={{ mt: 3, mb: 2 }}
             >
               Sign Up
+            </Button>
+            <Button
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              onClick={loginWithGoogle}
+            >
+              Sign In Using Google
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>

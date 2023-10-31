@@ -7,7 +7,6 @@ const firebaseConfig = {
   messagingSenderId: "676858597746",
   appId: "1:676858597746:web:353fc2055172de12ba0deb",
 };
-
 const app = initializeApp(firebaseConfig);
 import {
   GoogleAuthProvider,
@@ -37,6 +36,7 @@ const signInWithGoogle = async () => {
       prompt: "select_account",
     });
     const res = await signInWithPopup(auth, googleProvider);
+    console.log("🚀 ~ signInWithGoogle ~ res:", res)
     const user = res.user;
     const q = query(collection(db, "users"), where("uid", "==", user.uid));
     const docs = await getDocs(q);
@@ -48,6 +48,7 @@ const signInWithGoogle = async () => {
         email: user.email,
       });
     }
+    return user;
   } catch (err) {
     console.error(err);
     alert(err.message);
@@ -95,8 +96,8 @@ const sendPasswordReset = async (email) => {
   }
 };
 
-const logout = () => {
-  signOut(auth);
+const logout = async () => {
+  await signOut(auth);
 };
 
 export {

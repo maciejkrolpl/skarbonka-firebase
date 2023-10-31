@@ -3,6 +3,7 @@ import Family from "../service/familyService";
 import Register from "../pages/Register";
 import Main from "../pages/Main";
 import Login from "../pages/Login";
+import Logout from "../pages/Logout";
 const Router = createBrowserRouter([
   {
     path: "/family",
@@ -19,6 +20,10 @@ const Router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />
+  },
+  {
+    path: '/logout',
+    element: <Logout />
   }
 ]);
 

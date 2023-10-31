@@ -4,10 +4,10 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 const UserAvatar = ({ user }) => {
 
   if (user) {
-    if (user.photo) {
-      return <Avatar alt={user.name} src={user.photo} />;
+    if (user.photoURL) {
+      return <Avatar alt={user.name} src={user.photoURL} />;
     }
-    return <Avatar>{user.firstName[0]}</Avatar>;
+    return <Avatar>{user.displayName[0]}</Avatar>;
   }
 
   return (

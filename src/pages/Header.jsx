@@ -1,4 +1,5 @@
-import * as React from "react";
+import { Context } from "./Context";
+import {useState, useContext} from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -23,9 +24,12 @@ const userSettings = [
   { label: "Logout", goto: "logout" },
 ];
 
-function Header({ user }) {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+function Header() {
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
+  const [context, setContext] = useContext(Context);
+  const user = context.user;
 
   const settings = user ? userSettings : nonUserSettings;
 
